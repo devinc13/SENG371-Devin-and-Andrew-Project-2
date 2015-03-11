@@ -30,9 +30,20 @@ Bootstrap (10,820 issues - GitHub issue tracker): https://github.com/twbs/bootst
 
 ##Project Management Information
 
-Milestones: 
+#####Milestones: 
 
-Roles:
+Milestone 1 - March 11th: Install transit, try running it on a repo. 
+
+Milestone 2 - March 18th: Modify script to search daily, and use advanced search queries (bug and feature searches)
+
+Milestone 3 - March 25th: Modify/add to transit to be able to get the date and size of each code move.
+
+Milestone 4 - March 30th: Collect Data and record results!
+
+Milestone 5 - Stretch goal: Add auto generating graphs to the project.
+
+#####Roles:
+
 
 
 
