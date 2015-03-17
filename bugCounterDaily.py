@@ -105,6 +105,7 @@ print "CSV dates = " + str(csvDates)
 print "CSV count = " + str(csvCount)
 print str(startYear) + '-' + str(startMonth).zfill(2) + '-01'
 print str(endYear) + '-' + str(endMonth).zfill(2) + '-01'
+print "test"
 
 
 
