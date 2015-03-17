@@ -51,7 +51,7 @@ startDate = date(startYear, startMonth, 1)
 endDate = date(endYear, endMonth, 1)
 errorCount = 0
 
-while startDate <= endDate:
+while startDate + timedelta(days=1) <= endDate:
 
 	try:
 
