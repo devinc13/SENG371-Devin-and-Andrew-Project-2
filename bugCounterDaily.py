@@ -3,8 +3,9 @@ import re
 import time
 import sys
 import getopt
+from datetime import date, timedelta
 
-usage = 'bugCounter.py -u <githubUsername> -p <githubPassword> -a <startYear> -b <startMonth> -c <endYear> -d <endMonth> -o <owner> -r <repository> -q <query> -l<label>'
+usage = 'bugCounter.py -u <githubUsername> -p <githubPassword> -a <startYear> -b <startMonth> -c <endYear> -d <endMonth> -o <owner> -r <repository> -q <query> -l <label>'
 query = ''
 label = ''
 csvCount = ''
@@ -46,54 +47,43 @@ total = 0
 print 'Search query = ' + query
 print 'Search label = ' + label
 
-currentYear = startYear
-currentMonth = startMonth
-nextYear = startYear
+startDate = date(startYear, startMonth, 1)
+endDate = date(endYear, endMonth, 1)
+errorCount = 0
 
-if startMonth == 12:
-	nextMonth = 1
-	nextYear += 1
-else:
-	nextMonth = startMonth + 1
+while startDate <= endDate:
 
-while currentYear <= endYear:
-	if currentYear == endYear:
-		if currentMonth >= endMonth:
-			break
+	try:
 
-	dateRange = str(currentYear) + '-' + str(currentMonth).zfill(2) + '-01..' + str(nextYear) + '-' + str(nextMonth).zfill(2) + '-01'
-	url = 'https://api.github.com/search/issues?q=' + query.replace(" ", "+") + '+repo:' + str(owner) + '/' + str(repo) + '+created:' + dateRange
+		nextDate = startDate + timedelta(days=1)
 
-	if label != '':
-		url += '+label:' + label
+		dateRange = str(startDate.year) + '-' + str(startDate.month).zfill(2) +'-' + str(startDate.day).zfill(2) + '..' + str(nextDate.year) + '-' + str(nextDate.month).zfill(2) + '-' + str(nextDate.day).zfill(2)
+		url = 'https://api.github.com/search/issues?q=' + query.replace(" ", "+") + '+repo:' + str(owner) + '/' + str(repo) + '+created:' + dateRange
+
+		if label != '':
+			url += '+label:' + label
+			
+		req = urllib2.Request(url)
+		req.add_header("Content-type", "application/x-www-form-urlencoded")
+		req.add_header('Authorization', userData)
+		res = urllib2.urlopen(req)
+
+		p = re.compile('"total_count":(\d*)')
+
+		m = p.search(res.read())
+		total += int(m.group(1))
+		print dateRange + ' = ' + m.group(1)
+		csvCount += str(m.group(1)) + ','
+		csvDates += str(dateCounter) + ','
+		dateCounter += 1
 		
-	req = urllib2.Request(url)
-	req.add_header("Content-type", "application/x-www-form-urlencoded")
-	req.add_header('Authorization', userData)
-	res = urllib2.urlopen(req)
+		startDate += timedelta(days=1)
 
-	p = re.compile('"total_count":(\d*)')
-
-	m = p.search(res.read())
-	total += int(m.group(1))
-	print dateRange + ' = ' + m.group(1)
-	csvCount += str(m.group(1)) + ','
-	csvDates += str(dateCounter) + ','
-	dateCounter += 1
-	if currentMonth == 12:
-		currentMonth = 1
-		currentYear += 1
-	else:
-		currentMonth += 1
-
-	if nextMonth == 12:
-		nextMonth = 1
-		nextYear += 1
-	else:
-		nextMonth += 1
-
-	time.sleep(3)
-print "Total = " + str(total)
+		time.sleep(3)
+	except Exception:
+		print "error!"
+		errorCount += 1
+print "Total = " + str(total) + " Error total = " + str(errorCount)
 
 if csvCount[-1:] == ",":
     csvCount = csvCount[:-1]
@@ -103,9 +93,3 @@ if csvDates[-1:] == ",":
 		
 print "CSV dates = " + str(csvDates)
 print "CSV count = " + str(csvCount)
-print str(startYear) + '-' + str(startMonth).zfill(2) + '-01'
-print str(endYear) + '-' + str(endMonth).zfill(2) + '-01'
-print "test"
-
-
-
