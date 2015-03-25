@@ -78,7 +78,7 @@ while startDate + timedelta(days=1) <= endDate:
 		dateCounter += 1
 		
 		startDate += timedelta(days=1)
-
+                sys.stdout.flush()
 		time.sleep(3)
 	except Exception:
 		print "error!"
@@ -93,3 +93,4 @@ if csvDates[-1:] == ",":
 		
 print "CSV dates = " + str(csvDates)
 print "CSV count = " + str(csvCount)
+sys.stdout.flush()
