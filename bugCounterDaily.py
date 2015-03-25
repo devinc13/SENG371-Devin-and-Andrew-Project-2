@@ -78,7 +78,7 @@ while startDate + timedelta(days=1) <= endDate:
 		dateCounter += 1
 		
 		startDate += timedelta(days=1)
-                sys.stdout.flush()
+		sys.stdout.flush()
 		time.sleep(3)
 	except Exception:
 		print "error!"
