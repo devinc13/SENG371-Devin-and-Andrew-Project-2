@@ -35,10 +35,8 @@ for opt, arg in opts:
 			sys.exit(2)
 	elif opt in ("-a"):
 		startDate = datetime.datetime.strptime(arg, "%d-%m-%Y")
-		print startDate.strftime("%d-%m-%Y")
 	elif opt in ("-b"):
 		endDate = datetime.datetime.strptime(arg, "%d-%m-%Y")
-		print endDate.strftime("%d-%m-%Y")
 
 
 #Parse 'dat JSON!
@@ -70,9 +68,10 @@ for x in range(0, totalDays.days):
 		output[x+1] = 0
 
 keys = output.keys()
-with open(fileName + '.csv', 'r+b') as output_file:
+with open(fileName + '.csv', 'wb+') as output_file:
     dict_writer = csv.DictWriter(output_file, keys)
     dict_writer.writeheader()
     dict_writer.writerows([output])
 
+print "Wrote to file " + fileName + ".csv"
 sys.stdout.flush()
