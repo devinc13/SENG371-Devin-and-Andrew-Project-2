@@ -5,7 +5,8 @@ import datetime
 import csv
 
 # How to run this script:
-usage = "transitParser.py -f <JSON of transit output in .txt> -a <start date as DD-MM-YYYY> -b <end date as DD-MM-YYYY>"
+usage = "transitParser.py -f <JSON of transit output in .txt> -a <start date as DD-MM-YYYY> -b <end date as DD-MM-YYYY> -i <yes>\n\
+Only include -i flag to count the number of commits per day"
 
 # The minimum number of line moves to be accepted as an actual change.
 # Modify this variable as desired.
@@ -14,11 +15,13 @@ MinNumLineMove = 5
 revwalk = ""
 pairings = {}
 fileName = ""
+intensityMode = ''
+intensity = {}
 
 
 #Parse the arguments passed into this script
 try:
-	opts, args = getopt.getopt(sys.argv[1:], "f:a:b:")
+	opts, args = getopt.getopt(sys.argv[1:], "f:a:b:i:")
 except getopt.GetoptError:
 	print usage
 	sys.exit(2)
@@ -33,6 +36,8 @@ for opt, arg in opts:
 		except IOError as e:
 			print "Could not find file " + arg
 			sys.exit(2)
+	elif opt in ("-i"):
+		intensityMode = 'yes'
 	elif opt in ("-a"):
 		startDate = datetime.datetime.strptime(arg, "%d-%m-%Y")
 	elif opt in ("-b"):
@@ -55,8 +60,10 @@ for commit in revwalk:
 				dateCount = (commitDate - startDate).days
 				if dateCount in pairings:
 					pairings[dateCount] += num_lines
+					intensity[dateCount] += 1
 				else:
 					pairings[dateCount] = num_lines
+					intensity[dateCount] = 1
 
 output = {}
 totalDays = endDate - startDate
@@ -67,11 +74,21 @@ for x in range(0, totalDays.days):
 	else:
 		output[x+1] = 0
 
+intensityOutput = {}
+if intensityMode:
+	for x in range(0, totalDays.days):
+		if x in intensity:
+			intensityOutput[x+1] = intensity[x]
+		else:
+			intensityOutput[x+1] = 0
+
 keys = output.keys()
 with open(fileName + '.csv', 'wb+') as output_file:
     dict_writer = csv.DictWriter(output_file, keys)
     dict_writer.writeheader()
     dict_writer.writerows([output])
+    if intensityMode:
+    	dict_writer.writerows([intensityOutput])
 
 print "Wrote to file " + fileName + ".csv"
 sys.stdout.flush()
