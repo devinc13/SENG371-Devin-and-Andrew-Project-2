@@ -48,9 +48,13 @@ Due to the number of network calls being made to Github's API, and their rate li
 
 
 ##Results:
+(Graphs are really hard to see, you need to click on them to open them, and zoom wayyyyyyy in.)
+Rails:
+![Scaled Rails Chart](/Graphs/Scaled Graphs/Rails chart scaled.png?raw=true)
+Bootstrap:
 ![Scaled Bootstrap Chart](/Graphs/Scaled Graphs/Bootstrap chart scaled.png?raw=true)
-
-[[ /Graphs/Scaled Graphs/Bootstrap chart scaled.png | height = 500px ]]
+Node:
+![Scaled Node Chart](/Graphs/Scaled Graphs/Node chart scaled.png?raw=true)
 
 	
 ##Analysis:
