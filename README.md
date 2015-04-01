@@ -14,19 +14,38 @@ Instead of only using our script to get all this information from github, we wan
 For anti-regressive changes, we would like to use the tool Transit that was created by another team. This will allow us to detect both the day of an anti-regressive change, and the size of it.
 For features, we would like to still use the python script, but with some advanced searches. For repos without a "feature" label, we'd like to only search merged pull requests, and instead of searching for "feature", we will search for pull requests that don't contain the words bug, rewrite or refactor: "NOT bug AND NOT rewrite AND NOT refactor".
 Once we have gathered this data (the number of bugs, anti-regressive changes and progressive changes on each day of the project), we will create a graph for each repo, and use these to figure out how the anti-regressive and progressive changes effect the number of bugs, and also look for any other interesting correlations.
-
-##Metrics:
-
+Using the data, we also imported it into R, and calculated the correlation and covariance between progressive changes and bugs, and between anti-regressive changes and bugs.
 
 ##Codebases/Systems: 
 Ruby on Rails (6674 issues - GitHub issue tracker): https://github.com/rails/rails
 
-node.js (5608 issues - GitHub issue tracker): https://github.com/joyent/node 
+Node.js (5608 issues - GitHub issue tracker): https://github.com/joyent/node 
 
 Bootstrap (10,820 issues - GitHub issue tracker): https://github.com/twbs/bootstrap
 
+##Metrics
+Anti-regressive changes were all detected by using Transit on each repository. Progressive changes were done slightly differently on each repository, due to differences in labeling.
+####Ruby on Rails
+We analyzed Rails between April 2011 and Feburary 2015. Bugs were found by searching issues by the keyword "bug". Progressive changes were found by searching merged pull requests with the search "NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove".
+
+####Node
+We analyzed Node between August 2011 and Feburary 2015. Bugs were found by searching issues by the keyword "bug". Progressive changes were found by searching merged pull requests with the search "NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove".
+
+####Bootstrap
+We analyzed Bootstrap between June 2009 and Feburary 2015. Bugs were found by searching issues by the label "confirmed". Progressive changes were foudn by searching merged pull requests that had the label "feature".
+
 ##How to run the project!
-	 
+
+####Progressive Changes and Bugs
+To gather the csv data on Progressive changes and Bugs on the 3 repositories, you can run the script consecutively 6 times, writing text files with the output by running the following command:
+
+python bugCounterDaily.py -u <githubUsername> -p <githubPassword> -a 2011 -b 4 -c 2015 -d 2 -o rails -r rails -q 'is:issue bug' 2>&1 | tee railsBugs.txt && python bugCounterDaily.py -u <githubUsername> -p <githubPassword> -a 2011 -b 4 -c 2015 -d 2 -o rails -r rails -q 'is:pr is:merged NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove' 2>&1 | tee railsFeatures.txt && python bugCounterDaily.py -u <githubUsername> -p <githubPassword> -a 2011 -b 8 -c 2015 -d 2 -o twbs -r bootstrap -q 'is:issue' -l confirmed 2>&1 | tee bootstrapBugs.txt && python bugCounterDaily.py -u <githubUsername> -p <githubPassword> -a 2011 -b 8 -c 2015 -d 2 -o twbs -r bootstrap -q 'is:pr is:merged' -l feature 2>&1 | tee bootstrapFeatures.txt && python bugCounterDaily.py -u <githubUsername> -p <githubPassword> -a 2009 -b 6 -c 2015 -d 2 -o joyent -r node -q 'is:issue bug' 2>&1 | tee nodeBugs.txt && python bugCounterDaily.py -u <githubUsername> -p <githubPassword> -a 2009 -b 6 -c 2015 -d 2 -o joyent -r node -q 'is:pr is:merged NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove' 2>&1 | tee nodeFeatures.txt
+
+##### *** WARNING *** 
+Due to the number of network calls being made to Github's API, and their rate limiting, running the script as shown above will take a LONG time. Like over 12 hours, so be prepared!
+
+####Anti-Regressive Changes
+
 
 ##Results:
 
