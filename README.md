@@ -48,7 +48,9 @@ Due to the number of network calls being made to Github's API, and their rate li
 
 
 ##Results:
-![Scaled Bootstrap Chart](/Graphs/Scaled Graphs/Bootstrap chart scaled.png?raw=true =1000x)
+![Scaled Bootstrap Chart](/Graphs/Scaled Graphs/Bootstrap chart scaled.png?raw=true)
+
+[[ /Graphs/Scaled Graphs/Bootstrap chart scaled.png | height = 500px ]]
 
 	
 ##Analysis:
