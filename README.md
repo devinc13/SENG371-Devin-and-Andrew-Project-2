@@ -77,7 +77,7 @@ Andrew - In charge of getting results from transit
 Devin - In charge of updating the python script
 
 #####Project Burndown Chart:
-
+![Burndown Chart](/Graphs/Burndown Chart.png?raw=true "Burndown Chart")
 ## Link to Project Video:
 
 
