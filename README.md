@@ -9,12 +9,15 @@ Our hypotheses are that the more progressive changes there are, the more bugs wi
 
 ##Methodology: 
 The above hypotheses are what we found in project 1, but our proof and explanation of these were weak, so we want to improve this. Some of our issues were that the data wasn't precise enough, due to our monthly searches, and that we had difficulty detecting anti-regressive changes. These are what we want to improve upon in this project!
-The overall idea will still be to search the dates and amount of progressive (features), anti-regressive (refactoring) and bugs, and plot these to find the realtions between them.
+The overall idea will still be to search the dates and amount of progressive (features), anti-regressive (refactoring) and bugs, and plot these to find the relations between them.
 Instead of only using our script to get all this information from github, we want to find different ways to obtain the anti-regressive, and make sure it is on a daily basis, instead of monthly. We will still use our script for counting bugs, as it seems quite reliable for that, although we will make sure that the search is limited to include only issues, not pull requests.
 For anti-regressive changes, we would like to use the tool Transit that was created by another team. This will allow us to detect both the day of an anti-regressive change, and the size of it.
 For features, we would like to still use the python script, but with some advanced searches. For repos without a "feature" label, we'd like to only search merged pull requests, and instead of searching for "feature", we will search for pull requests that don't contain the words bug, rewrite or refactor: "NOT bug AND NOT rewrite AND NOT refactor".
 Once we have gathered this data (the number of bugs, anti-regressive changes and progressive changes on each day of the project), we will create a graph for each repo, and use these to figure out how the anti-regressive and progressive changes effect the number of bugs, and also look for any other interesting correlations.
 Using the data, we also imported it into R, and calculated the correlation and covariance between progressive changes and bugs, and between anti-regressive changes and bugs.
+After examining the correlations and covariance values from the original data, we realized this was checking the correlation and covariances between bugs and progressive/anti-regressive changes on the same days, but not checking things like how a feature would effect the number of bugs in the following days or weeks.
+To solve this oversight, some research was done, and we found that you can calculate cross correlations in R, which show the correlation with lag intervals added (in our case, daily lag).
+This allows us to see how features and anti-regressive changes correlated with the number of reported bugs throughout the following 28-30 days.
 
 ##Codebases/Systems: 
 Ruby on Rails (6674 issues - GitHub issue tracker): https://github.com/rails/rails
@@ -24,15 +27,15 @@ Node.js (5608 issues - GitHub issue tracker): https://github.com/joyent/node
 Bootstrap (10,820 issues - GitHub issue tracker): https://github.com/twbs/bootstrap
 
 ##Metrics
-Anti-regressive changes were all detected by using Transit on each repository. Progressive changes were done slightly differently on each repository, due to differences in labeling.
+Anti-regressive changes were all detected by using Transit on each repository. Progressive changes were done slightly differently on each repository, due to differences in labelling.
 ####Ruby on Rails
-We analyzed Rails between April 2011 and Feburary 2015. Bugs were found by searching issues by the keyword "bug". Progressive changes were found by searching merged pull requests with the search "NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove".
+We analysed Rails between April 2011 and February 2015. Bugs were found by searching issues by the keyword "bug". Progressive changes were found by searching merged pull requests with the search "NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove".
 
 ####Node
-We analyzed Node between August 2011 and Feburary 2015. Bugs were found by searching issues by the keyword "bug". Progressive changes were found by searching merged pull requests with the search "NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove".
+We analysed Node between August 2011 and February 2015. Bugs were found by searching issues by the keyword "bug". Progressive changes were found by searching merged pull requests with the search "NOT bug AND NOT rewrite AND NOT refactor AND NOT fix AND NOT remove".
 
 ####Bootstrap
-We analyzed Bootstrap between June 2009 and Feburary 2015. Bugs were found by searching issues by the label "confirmed". Progressive changes were foudn by searching merged pull requests that had the label "feature".
+We analysed Bootstrap between June 2009 and February 2015. Bugs were found by searching issues by the label "confirmed". Progressive changes were found by searching merged pull requests that had the label "feature".
 
 ##How to run the project!
 
@@ -56,7 +59,11 @@ Bootstrap:
 Node:
 ![Scaled Node Chart](/Graphs/Scaled Graphs/Node chart scaled.png?raw=true)
 
-	
+####Cross Correlation Graphs
+(These graphs are plotting the correlation of either progressive or anti-regressive changes vs bugs, and plotting the correlation lag in daily increments. For example, for features at day 14, positive correlation means that the more features there are, the more bugs there are 14 days later, and negative correlation would mean that the more features there are, the less bugs there are 14 days later.)
+
+![](/Graphs/CrossCorrelationCharts/RailsFeaturesVsBugsCrossCorrelation.jpg?raw=true)
+
 ##Analysis:
 
 ##Threats to Validity:
