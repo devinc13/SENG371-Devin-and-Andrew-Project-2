@@ -1,5 +1,7 @@
 # SENG371-Devin-and-Andrew-Project-2
 
+Devin Corrigall and Andrew Hansen
+
 ##Our Project Question: 
 For project two, we want to continue with the idea of examining the effect of progressive changes and anti-regressive changes on the number of reported bugs over time. Therefore, our question will still be:
 ####"How does the number of progressive and anti-regressive changes effect the number of bugs reported over time?"
