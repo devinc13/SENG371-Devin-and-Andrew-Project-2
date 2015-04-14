@@ -24,24 +24,27 @@ try:
 	opts, args = getopt.getopt(sys.argv[1:], "f:a:b:i:")
 except getopt.GetoptError:
 	print usage
-	sys.exit(2)
+	sys.exit(0)
 for opt, arg in opts:
 	if opt == '-h':
-		print "Improper arguments. please invoke script as: " + usage
-		sys.exit(2)
+		print usage
+		sys.exit()
 	elif opt in ("-f"):
 		try:
 			fileName = arg
 			revwalk = json.loads(open(fileName, 'r').read())
 		except IOError as e:
 			print "Could not find file " + arg
-			sys.exit(2)
+			sys.exit(1)
 	elif opt in ("-i"):
 		intensityMode = 'yes'
 	elif opt in ("-a"):
 		startDate = datetime.datetime.strptime(arg, "%d-%m-%Y")
 	elif opt in ("-b"):
 		endDate = datetime.datetime.strptime(arg, "%d-%m-%Y")
+	else:
+		print "Improper arguments. please invoke script as: " + usage
+		sys.exit(2)
 
 
 #Parse 'dat JSON!
