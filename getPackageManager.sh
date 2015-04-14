@@ -1,16 +1,19 @@
 #!/bin/bash
 
-haveProg() {
-    [ -x "$(which $1)" ]
+havePkgMngr ()
+{
+	[ -x "$(which $1)" ]
 }
 
-if haveProg apt-get ; then
+if havePkgMngr apt-get ; then
 	echo apt-get
-#elif haveProg yum ; then 
-#	echo yum
-#elif haveProg up2date ; then
-#	echo up2date
+elif havePkgMngr yum ; then
+	echo yum
+elif havePkgMngr brew ; then
+	echo brew
+elif havePkgMngr up2date ; then
+	echo up2date
 else
-    echo 'No package manager found!'
-    exit 2
+	echo "No package manager found!"
+	exit 2
 fi
