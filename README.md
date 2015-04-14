@@ -127,6 +127,7 @@ Andrew - In charge of getting results from transit, parsing them to match our ot
 Devin - In charge of updating the python script and doing R stuff.
 
 #####Project Burndown Chart:
+(This does not include Milestone 6, as it wasn't originally part of the plan)
 ![Burndown Chart](/Graphs/Burndown Chart.png?raw=true "Burndown Chart")
 ## Link to Project Video:
 
