@@ -70,10 +70,44 @@ Node:
 ![](/Graphs/CrossCorrelationCharts/NodeAnti-regressiveVsBugsCrossCorrelation.jpg?raw=true)
 
 ##Analysis:
+Our original plan of studying the more detailed daily graphs didn't work out, as the graphs are so massive, it is extremely difficult to pull any meaningful conclusions. Instead, we used R to calculate the cross correlations to help prove or disprove our hypothesis.
+The cross correlation shifts the data by daily increments (lag), and calculates the correlation at each shift. This data was graphed manually, resulting in the above Cross Correlation graphs.
+Taking a look at the Cross Correlation graphs shows us the following:
+####Rails:
+For Rails, we can see that a progressive change (feature) resulted in more bugs during the first 14 days following the feature, but after that it isn't consistent, either slightly increasing or decreasing the number of bugs.
+The anti-regressive changes in Rails seem to decrease the number of bugs in the first two weeks, but increase the number of bugs in the 3rd and 4th weeks afterwards.
+ 
+####Bootstrap:
+Bootstrap's Cross Correlation graph is very clear that progressive changes result in more bugs in the following 28 days.
+Anti-regressive changes, on the other hand, seem to slightly decrease the number of bugs in the first couple of weeks, but increase the number of bugs in the following weeks.
+
+####Node:
+Progressive changes in node almost always result in an increase of bugs in the following 4 weeks.
+Anti-regressive changes also often result in an increase of bugs, although there were a few lags that did result in a decrease in the number of bugs, mainly in the first week and a half.
+
+####So what does all this mean?
+Overall, from the data we collected and the Cross Correlation graphs made from it, it seems that progressive changes increase the number of bugs in the 28-30 days after the change.Anti-regressive changes aren't quite as clear, but they do seem to decrease the number of bugs in the first 2 weeks following the refactor, but then increase the number of bugs in the 3rd and 4th following weeks.
+One possible reason for this increase in the 3rd and 4th weeks might be due to the fact that the refactoring decreases familiarity with the codebase, causing developers to make mistakes because of that.
 
 ##Threats to Validity:
+-Only examining 3 repositories doesn't give us enough data to have confidence in our results.
+
+-Our data for anti-regressive changes (from Transit) is very bursty, with lots of days with no anti-regressive changes, followed by ones with a value of 1000, since we were counting the number of lines moved.
+
+-Increasing our granularity to a daily basis may have been too specific, resulting in messier data. Maybe a weekly compromise would be better.
 
 ##Future Work:
+The following tasks would be interesting to pursue in the future:
+
+-Running the R analysis on the data to generate the cross correlation data on larger ranges (it currently only lags the data by a month) could give us insight into longer term effects of progressive and anti-regressive changes.
+
+-Automating more of the process
+
+-Examining more repositories
+
+-Exploring different ways of collecting data for anti-regressive and progressive changes
+
+-Consider looking at the data on a weekly basis, instead of daily.
 
 ##Project Management Information:
 
@@ -87,13 +121,15 @@ Milestone 3 - March 25th: Modify/add to transit to be able to get the date and s
 
 Milestone 4 - March 30th: Collect Data and record results!
 
-Milestone 5 - Stretch goal: Add auto generating graphs to the project.
+Milestone 5 - Stretch goal: Add auto generating graphs to the project. **Since original graphs proved to be huge and messy and hard to read, this was omitted.
+
+Milestone 6 - No date, added later: Import data into R, perform statistical analysis, and create cross correlation graphs.
 
 #####Roles:
 
-Andrew - In charge of getting results from transit
+Andrew - In charge of getting results from transit, parsing them to match our other data, and attempting to automate some of this with bash scripts
 
-Devin - In charge of updating the python script
+Devin - In charge of updating the python script and doing R stuff
 
 #####Project Burndown Chart:
 ![Burndown Chart](/Graphs/Burndown Chart.png?raw=true "Burndown Chart")
