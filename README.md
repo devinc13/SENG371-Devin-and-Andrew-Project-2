@@ -63,6 +63,11 @@ Node:
 (These graphs are plotting the correlation of either progressive or anti-regressive changes vs bugs, and plotting the correlation lag in daily increments. For example, for features at day 14, positive correlation means that the more features there are, the more bugs there are 14 days later, and negative correlation would mean that the more features there are, the less bugs there are 14 days later.)
 
 ![](/Graphs/CrossCorrelationCharts/RailsFeaturesVsBugsCrossCorrelation.jpg?raw=true)
+![](/Graphs/CrossCorrelationCharts/RailsAnti-regressiveVsBugsCrossCorrelation.jpg?raw=true)
+![](/Graphs/CrossCorrelationCharts/BootstrapFeaturesVsBugsCrossCorrelation.jpg?raw=true)
+![](/Graphs/CrossCorrelationCharts/BootstrapAnti-regressiveVsBugsCrossCorrelation.jpg?raw=true)
+![](/Graphs/CrossCorrelationCharts/NodeFeaturesVsBugsCrossCorrelation.jpg?raw=true)
+![](/Graphs/CrossCorrelationCharts/NodeAnti-regressiveVsBugsCrossCorrelation.jpg?raw=true)
 
 ##Analysis:
 
