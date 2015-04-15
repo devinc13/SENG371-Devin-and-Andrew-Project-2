@@ -132,6 +132,7 @@ Devin - In charge of updating the python script and doing R stuff.
 (This does not include Milestone 6, as it wasn't originally part of the plan)
 ![Burndown Chart](/Graphs/Burndown Chart.png?raw=true "Burndown Chart")
 ## Link to Project Video:
+[Watch it on youtube!](http://youtu.be/TT91FSwTW1o)
 
 
 
